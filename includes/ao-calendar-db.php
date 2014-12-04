@@ -1,9 +1,16 @@
 <?php
 
+/**
+ * Class used to build and manipulate
+ * the AO Calendar event table
+ */
 class AOCalDB {
 
     private $sqltable;
 
+    /**
+     * Construct the table if it doesn't already exist.
+     */
     public function __construct() {
         global $wpdb;
         $table_check = $wpdb->get_var("SHOW TABLES LIKE '$this->sqltable'");
