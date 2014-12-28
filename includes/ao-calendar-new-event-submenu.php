@@ -4,6 +4,7 @@ add_action('admin_menu', 'ao_cal_register_new_event_submenu', 20);
 
 /**
  * Adds the add new event submenu to the WordPress dashboard
+ * @since 1.0.0
  */
 function ao_cal_register_new_event_submenu() {
         add_submenu_page(
@@ -12,13 +13,14 @@ function ao_cal_register_new_event_submenu() {
           'Add New Event',
           'manage_options',
           'aocal-add-new-event',
-          ao_cal_render_admin_add_new_submenu(),
+          'ao_cal_render_admin_add_new_submenu'
     );
 
 }
 
 /**
  * Render the HTML for the add new event submenu page
+ * @since 1.0.0
  * @return STRING HTML output
  */
 function ao_cal_render_admin_add_new_submenu() {
@@ -28,13 +30,14 @@ function ao_cal_render_admin_add_new_submenu() {
     ao_cal_render_admin_add_new_content();
 
     $output = ob_get_contents();
-    ob_end_flush();
+    ob_end_clean();
 
-    return $output;
+    echo $output;
 }
 
 /**
  * Render the content for the add new submenu page
+ * @since 1.0.0
  * @return STRING HTML output
  */
 function ao_cal_render_admin_add_new_content() {
@@ -42,6 +45,10 @@ function ao_cal_render_admin_add_new_content() {
 }
 
 
+/**
+ * [ao_cal_render_admin_add_new_form description]
+ * @since 1.0.0
+ */
 function ao_cal_render_admin_add_new_form() {
     ?>
     <form id="ao-cal-add-new-event-form" action="" method="post">
@@ -79,7 +86,13 @@ function ao_cal_render_admin_add_new_form() {
     <?php
 }
 
-
+/**
+ * [ao_cal_render_admin_add_new_form_table_row description]
+ * @param {[type]} $label [description]
+ * @param {[type]} $name  [description]
+ * @param {[type]} $type  [description]
+ * @since 1.0.0
+ */
 function ao_cal_render_admin_add_new_form_table_row($label, $name, $type) {
     $edit_label = strtolower($label);
     $edit_label = str_replace(' ', '-', $label);
