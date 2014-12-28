@@ -1,6 +1,6 @@
 <?php
 
-add_action( 'admin_menu', 'register_my_custom_menu_page' );
+add_action( 'admin_menu', 'ao_cal_register_admin_menu', 15);
 
 /**
  * Adds the main menu to the WordPress dashboard
@@ -54,3 +54,7 @@ function ao_cal_render_admin_main_content() {
     <p>The most important thing is the shortcode to display the calendar. That code is [ao-calendar].</p>
     <?php
 }
+
+/**
+ * Require Sub Menu 
+ */
