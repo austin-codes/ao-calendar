@@ -35,7 +35,6 @@ require_once( ABSPATH . 'wp-includes/pluggable.php' );
 /**
  * Execute Admin Displys
  * @since 1.0.0
- * @return {[type]} [description]
  */
 function ao_cal_execute_admin() {
     // ----- Require the main admin page
@@ -54,19 +53,25 @@ function ao_cal_execute_admin() {
 * @return STRING HTML output
 */
 function ao_cal_render_display() {
-    $events = ao_cal_gather_events();
 
+    $events = ao_cal_gather_events();
     // ----- Allowing for future advancement
     $events = apply_filters('ao-cal-events', $events);
-    ob_start(); 
+
+    // ----- Get the current month and year
+    $month = date('m');
+    $year = date('Y');
+
+    ob_start();
     ?>
+    <h3>Hey There</h3>
     <div id="ao-cal-display-container" class="ao-cal-display-container">
-        <div class="ao-cal-data" style="display: none;"></div>
-        <div id="ao-cal-display" class="ao-cal_display"></div>
+        <div id="ao-cal-display" class="ao-cal_display" data-month="<?php echo $month; ?>" data-year="<?php echo $year; ?>"></div>
     </div>
     <?php
+
     $output = ob_get_contents();
-    ob_end_flush();
+    ob_end_clean();
 
     // ----- Allowing for future advancement
     $output = apply_filters('ao-cal-render-display', $output);
@@ -75,17 +80,34 @@ function ao_cal_render_display() {
 }
 
 /**
+ *AO Cal Class
+ */
+
+class AOCal {
+
+    var $db;
+
+    function __construct() {
+        $this->db = new AOCalDB();
+    }
+}
+
+global $aocal;
+$aocal = new AOCal();
+
+/**
  * ----- ----- ----- ----- -----
  * Functionality for Admin Dashboard
  * ----- ----- ----- ----- -----
  */
+
 
 /**
  * Check to see if the requested page is a nadmin page,
  * then let's make sure that the user is
  * actually logged in
  */
-if (is_admin() && is_user_logged_in()) {
+if ( is_admin() && is_user_logged_in() ) {
 
     ao_cal_execute_admin();
 }
@@ -100,5 +122,5 @@ if (is_admin() && is_user_logged_in()) {
  * Shortcode used to display the calendar
  */
 else {
-    add_shortcode('ao-calendar', ao_cal_render_display());
+    add_shortcode( 'ao-calendar', 'ao_cal_render_display' );
 }
