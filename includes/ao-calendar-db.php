@@ -97,9 +97,17 @@ class AOCalDB {
 
 
     function get($id = NULL, $str = NULL) {
-        
 
     }
+
+    function update() {
+
+    }
+
+    function delete() {
+
+    }
+
 
     /**
      * Other Methods
@@ -111,7 +119,7 @@ class AOCalDB {
       * @since 1.0.0
       * @return STRING      Data cleansed to be added to DB table
       */
-    function filter_inputs($val) {
+    function filter_input($val) {
         $input = esc_html($val);
         return $input;
     }

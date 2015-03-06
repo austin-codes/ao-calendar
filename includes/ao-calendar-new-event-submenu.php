@@ -15,6 +15,7 @@ function ao_cal_register_new_event_submenu() {
           'aocal-add-new-event',
           'ao_cal_render_admin_add_new_submenu'
     );
+    //dump($_POST);
 
 }
 
@@ -57,7 +58,7 @@ function ao_cal_render_admin_add_new_form() {
             <?php
             ao_cal_render_admin_add_new_form_table_row('Title', 'event_title', 'text');
             ao_cal_render_admin_add_new_form_table_row('Start Date', 'event_start_date', 'date');
-            ao_cal_render_admin_add_new_form_table_row('Start Time', 'event_end_time', 'time');
+            ao_cal_render_admin_add_new_form_table_row('Start Time', 'event_start_time', 'time');
             ao_cal_render_admin_add_new_form_table_row('End Date', 'event_end_date', 'date');
             ao_cal_render_admin_add_new_form_table_row('End Time', 'event_end_time', 'time');
             ao_cal_render_admin_add_new_form_table_row('Description', 'event_description', 'textarea');
@@ -184,3 +185,24 @@ function ao_cal_render_admin_add_textarea_form_table_row($label, $name) {
     </tr>
     <?php
 }
+
+
+/**
+ *
+ *
+ *
+ *
+ */
+ global $aocal;
+ if (isset($_POST['new-event-submit']) && $_POST['new-event-submit'] === 'Add Event') {
+     $new_event = array(
+         'title' => $_POST['event_title'],
+         'start_date' => $_POST['event_start_date'],
+         'end_date' => $_POST['event_end_date'],
+         'start_time' => $_POST['event_start_time'],
+         'end_time' => $_POST['event_end_time'],
+         'description' => $_POST['event_description'],
+         'location' => $_POST['event_address'] . ', ' . $_POST['event_city'] . ',' . $_POST['event_state'] . ' ' . $_POST['event_zip'],
+     );
+     $aocal->db->add($new_event);
+ }

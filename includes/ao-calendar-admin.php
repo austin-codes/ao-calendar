@@ -56,7 +56,7 @@ function ao_cal_render_admin_header() {
  */
 function ao_cal_render_admin_main_content() {
     ?>
-    <p>The most important thing is the shortcode to display the calendar. That code is [ao-calendar].</p>
+    <p>The most important thing is the shortcode to display the calendar. That code is <code>[ao-calendar]</code>.</p>
     <?php
 }
 
