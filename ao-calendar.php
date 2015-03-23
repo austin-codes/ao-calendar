@@ -18,6 +18,7 @@ defined('ABSPATH') or die("YOU SHALL NOT PASS");
  * Define constants
  */
 define( "AO_PLUGINS_PATH", plugin_dir_path(dirname(__FILE__)) );
+define( "AO_CAL_DIR", AO_PLUGINS_PATH . 'ao-calendar/' );
 
 /**
  * Require General Files

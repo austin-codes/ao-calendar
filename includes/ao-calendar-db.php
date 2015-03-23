@@ -8,6 +8,13 @@ class AOCalDB {
 
     private $sqltable = 'ao_cal_events';
 
+    private $select = '*';
+    private $from = 'FROM wp_posts';
+    private $where = '';
+
+    private $statement = '';
+
+
     /**
     * Construct the table if it doesn't already exist.
     * @since 1.0.0
@@ -15,6 +22,7 @@ class AOCalDB {
     public function __construct() {
         global $wpdb;
         $this->sqltable = $wpdb->prefix . $this->sqltable;
+        $this->from = 'FROM ' . $this->sqltable;
         $table_check = $wpdb->get_var("SHOW TABLES LIKE '$this->sqltable'");
         if ($table_check != $this->sqltable) {
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -95,12 +103,20 @@ class AOCalDB {
 
     }
 
-
-    function get($id = NULL, $str = NULL) {
-
+    /**
+     * [get description]
+     * @param  [type] $id   [description]
+     * @param  [type] $indi [description]
+     * @param  [type] $str  [description]
+     * @return [type]       [description]
+     */ 
+    function get($id = NULL, $indi = FALSE, $str = NULL) {
+        if (isset($id)) {
+            $this->where('ID', $id);
+        }
     }
 
-    function update() {
+    function update($id) {
 
     }
 
@@ -108,17 +124,148 @@ class AOCalDB {
 
     }
 
+    /**
+     * Statement Creation
+     */
+
+    /**
+     * [select description]
+     * @param  [type] $select [description]
+     * @return [type]         [description]
+     */
+    function select($select) {
+
+        // Check to see if param is an array
+        if (is_array($select)) {
+            $this->select = '';
+
+            // Filter through elements of the array and appending to
+            // select var
+            foreach ($select as $item) {
+
+                // If the count or the array - 1 is equal to the index of this element
+                // then this element is the last and therefore doesn't require a
+                // trailing comma.
+                if  (count($select) - 1 == array_search($item, $select)) {
+                    $this->select .= $item;
+                }
+                else {
+                    $this->select .= $item . ', ';
+                }
+
+            }
+        }
+        // Param wasn't an array, simply set the select var.
+        else {
+            $this->select = $select;
+        }
+    }
+
+    /**
+     * [from description]
+     * @param  [type] $left_table  [description]
+     * @param  [type] $right_table [description]
+     * @param  string $join        [description]
+     * @return [type]              [description]
+     */
+    function from($left_table, $right_table = NULL, $join = 'JOIN' ) {
+        $f = 'FROM ';
+
+        if ( !is_null($right_table) ) {
+            $f .= $left_table . ' ' . $join . ' ' . $right_table . ' ';
+        }
+        else {
+            $f .= $left_table . ' ';
+        }
+
+        $this->from = $f;
+    }
+
+    /**
+     * [where description]
+     * @param  [type] $source [description]
+     * @param  [type] $target [description]
+     * @param  string $comp   [description]
+     * @return [type]         [description]
+     */
+    function where($source, $target = NULL, $comp = '=') {
+        if (is_array($source)) {
+            /**
+             * $source array schema:
+             * array(
+             * 		array($source, $target, $comp),
+             * 		array($source, $target, $comp),
+             * 		array($source, $target, $comp)
+             * );
+             *
+             *
+             */
+
+            $this->where = 'WHERE ';
+
+            foreach ($source as $s) {
+
+                // Make sure each element is an array
+                if (is_array($s)) {
+                    // Set the source of the sub array
+                    $sql = $s[0] . ' ';
+
+                    // Is the comp val set in the sub array
+                    if (isset($s[2])) {
+                        $sql .= $s[2] . ' ';
+                    }
+                    else {
+                        $sql .= '= ';
+                    }
+
+                    // set the target of the sub array
+                    $sql .= $s[1] . ' ';
+
+                    if (count($source) - 1 == array_search($s, $source)) {
+                        $sql .= ' ';
+                    }
+                    else {
+                        $sql .= 'AND ';
+                    }
+                }
+            }
+        }
+
+        else {
+
+            $sql = 'WHERE ' . $source . ' ' . $comp . ' ' . $target . ' ';
+
+        }
+
+        $this->where = $sql;
+
+    }
+
+    /**
+     * [statement description]
+     * @param  [type] $stmt [description]
+     * @return [type]       [description]
+     */
+    function statement($stmt = NULL) {
+        if (is_null($stmt)) {
+            $this->statement = $this->select . ' ' . $this->from . ' ' . $this->where;
+        }
+        else {
+            $this->statement = $stmt;
+        }
+    }
+
 
     /**
      * Other Methods
      */
 
-     /**
-      * Cleanse input to prevent harmful additions to DB
-      * @param  STRING $val Data to be put into the DB table
-      * @since 1.0.0
-      * @return STRING      Data cleansed to be added to DB table
-      */
+    /**
+     * Cleanse input to prevent harmful additions to DB
+     * @param  STRING $val Data to be put into the DB table
+     * @since 1.0.0
+     * @return STRING      Data cleansed to be added to DB table
+     */
     function filter_input($val) {
         $input = esc_html($val);
         return $input;
