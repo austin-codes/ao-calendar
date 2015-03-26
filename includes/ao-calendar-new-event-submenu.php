@@ -190,7 +190,7 @@ function ao_cal_render_admin_add_textarea_form_table_row($label, $name) {
 /**
  * Check GET Parameter to see if we need to add an event.
  */
- 
+
  global $aocal;
  if (isset($_POST['new-event-submit']) && $_POST['new-event-submit'] === 'Add Event') {
      $new_event = array(

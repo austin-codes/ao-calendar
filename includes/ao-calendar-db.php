@@ -8,7 +8,7 @@ class AOCalDB {
 
     private $sqltable = 'ao_cal_events';
 
-    private $select = '*';
+    private $select = 'SELECT *';
     private $from = 'FROM wp_posts';
     private $where = '';
 
@@ -17,6 +17,18 @@ class AOCalDB {
 
     /**
     * Construct the table if it doesn't already exist.
+    *
+    * schema =
+    * 		id              - Primary Key Auto Increment
+    * 		title           - String title of the event
+    * 		start_date      - Date of event start in YYYY-MM-DD format
+    * 		end_date        - Date of event end in YYYY-MM-DD format
+    * 		description     - The complete description of the event
+    * 		location        - Address of the event location
+    * 		categroy        -
+    * 		source          -
+    * 		alternate_id    -
+    *
     * @since 1.0.0
     */
     public function __construct() {
@@ -42,6 +54,8 @@ class AOCalDB {
                     )
                 CHARACTER SET utf8
                 COLLATE utf8_general_ci;";
+
+            $sql = apply_filter('aocal-sql-table', $sql);
             dbDelta($sql);
         }
     }
@@ -105,23 +119,60 @@ class AOCalDB {
 
     /**
      * [get description]
-     * @param  [type] $id   [description]
-     * @param  [type] $indi [description]
+     * @param  [type] $id   ID of specific desired row
+     * @param  BOOL $indi   Whether or not you want a single response
      * @param  [type] $str  [description]
+     * @param  BOOL     $reset  Whether or not the query variables need to be reset
      * @return [type]       [description]
-     */ 
-    function get($id = NULL, $indi = FALSE, $str = NULL) {
+     */
+    function get($id = NULL, $indi = FALSE, $str = NULL, $reset = TRUE) {
+        global $wpdb;
         if (isset($id)) {
             $this->where('ID', $id);
         }
+        $this->statement();
+        // dump($this->statement);
+
+        if ($indi) {
+            $response = $wpdb->get_row($this->statement);
+            if (count(get_object_vars($response)) == 1) {
+                foreach ($response as $r) {
+                    $result = $r;
+                }
+            }
+            else {
+                $result = $response;
+            }
+        }
+
+        else {
+            $result = $wpdb->get_results($this->statement);
+        }
+
+
+        // dump($result);
+
+        if ($reset) {
+            $this->reset();
+        }
+        $this->statement();
+        // dump($this->statement);
+
+        return $result;
     }
 
-    function update($id) {
+    function update($id, $data) {
+        global $wpdb;
 
+        if (!is_array($data)) {
+            return;
+        }
+        $wpdb->update($this->sqltable, $data, array('ID' => $id));
     }
 
-    function delete() {
-
+    function delete($id) {
+        global $wpdb;
+        $wpdb->delete($this->sqltable, array('ID' => $id));
     }
 
     /**
@@ -135,9 +186,10 @@ class AOCalDB {
      */
     function select($select) {
 
+        $this->select = 'SELECT ';
+
         // Check to see if param is an array
         if (is_array($select)) {
-            $this->select = '';
 
             // Filter through elements of the array and appending to
             // select var
@@ -146,7 +198,9 @@ class AOCalDB {
                 // If the count or the array - 1 is equal to the index of this element
                 // then this element is the last and therefore doesn't require a
                 // trailing comma.
-                if  (count($select) - 1 == array_search($item, $select)) {
+                $last = (count($select) - 1 == array_search($item, $select));
+
+                if ($last) {
                     $this->select .= $item;
                 }
                 else {
@@ -157,7 +211,7 @@ class AOCalDB {
         }
         // Param wasn't an array, simply set the select var.
         else {
-            $this->select = $select;
+            $this->select .= $select;
         }
     }
 
@@ -168,11 +222,11 @@ class AOCalDB {
      * @param  string $join        [description]
      * @return [type]              [description]
      */
-    function from($left_table, $right_table = NULL, $join = 'JOIN' ) {
+    function from($left_table, $right_table = NULL, $on = NULL, $join = 'JOIN' ) {
         $f = 'FROM ';
 
         if ( !is_null($right_table) ) {
-            $f .= $left_table . ' ' . $join . ' ' . $right_table . ' ';
+            $f .= $left_table . ' ' . $join . ' ' . $right_table . ' ON ' . $on;
         }
         else {
             $f .= $left_table . ' ';
@@ -201,14 +255,14 @@ class AOCalDB {
              *
              */
 
-            $this->where = 'WHERE ';
+            $sql = 'WHERE ';
 
             foreach ($source as $s) {
 
                 // Make sure each element is an array
                 if (is_array($s)) {
                     // Set the source of the sub array
-                    $sql = $s[0] . ' ';
+                    $sql .= $s[0] . ' ';
 
                     // Is the comp val set in the sub array
                     if (isset($s[2])) {
@@ -222,7 +276,7 @@ class AOCalDB {
                     $sql .= $s[1] . ' ';
 
                     if (count($source) - 1 == array_search($s, $source)) {
-                        $sql .= ' ';
+                        $sql .= '';
                     }
                     else {
                         $sql .= 'AND ';
@@ -269,5 +323,14 @@ class AOCalDB {
     function filter_input($val) {
         $input = esc_html($val);
         return $input;
+    }
+
+    function reset() {
+        global $wpdb;
+        $this->sqltable = $wpdb->prefix .  'ao_cal_events';
+        $this->select = 'SELECT *';
+        $this->from = 'FROM ' . $this->sqltable;
+        $this->where = '';
+        $this->statement = '';
     }
 }

@@ -43,6 +43,7 @@ function ao_cal_execute_admin() {
 
     // ----- Require submenus
     require_once( AO_PLUGINS_PATH . 'ao-calendar/includes/ao-calendar-new-event-submenu.php' );
+    require_once( AO_PLUGINS_PATH . 'ao-calendar/includes/ao-calendar-event-list-submenu.php' );
 }
 
 /**
@@ -90,6 +91,13 @@ class AOCal {
 
     function __construct() {
         $this->db = new AOCalDB();
+        $this->db->select(array('start_time', 'end_time'));
+        // $this->db->from('post', 'message', 'post.id = message.post_id');
+        // $this->db->where(array(
+        //     array('animal', 'cow'),
+        //     array('birthday', '11-20-1991', '>=')
+        // ));
+        $this->db->get(NULL, TRUE);
     }
 }
 
@@ -109,7 +117,6 @@ $aocal = new AOCal();
  * actually logged in
  */
 if ( is_admin() && is_user_logged_in() ) {
-
     ao_cal_execute_admin();
 }
 
