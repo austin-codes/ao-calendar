@@ -46,4 +46,24 @@ function ao_cal_render_admin_event_list_content() {
 
     $events = $aocal->db->get();
     dump($events);
+    foreach ($events as $event) {
+        ?>
+        <div class="event-row" style="display: flex; flex-direction: row;">
+        <?php
+
+            foreach ($event as $col => $data) {
+                ?>
+                <div class="<?php echo str_replace('_', '-', $col); ?>" style="padding: 13px;">
+                    <?php echo $data; ?>
+                </div>
+                <?php
+            }
+
+        ?>
+            <div class="delete" style="padding: 13px;">
+                <button name="event-delete-button" data-id="<?php echo $event->id; ?>">X</button>
+            </div>
+        </div>
+        <?php
+    }
 }
