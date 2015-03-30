@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Event List Submenu for the AO Calendar
+ *
+ * @author Austin Adamson AO Development
+ * @since 1.0.0
+ */
+
+
 add_action('admin_menu', 'ao_cal_register_event_list_submenu', 20);
 
 /**

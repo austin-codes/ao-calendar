@@ -1,4 +1,16 @@
 <?php
+/**
+ * Generic Functions for the AO Calendar
+ *
+ * @author Austin Adamson AO Development
+ * @since 1.0.0
+ */
+
+
+
+
+
+
 
 /**
  * Gathers all events and returns them as a JSON string.

@@ -3,6 +3,9 @@
 /**
 * Class used to build and manipulate
 * the AO Calendar event table
+* @author Austin Adamson AO Development
+*
+* @since 1.0.0
 */
 class AOCalDB {
 
@@ -156,7 +159,6 @@ class AOCalDB {
             $this->reset();
         }
         $this->statement();
-        // dump($this->statement);
 
         return $result;
     }
