@@ -69,9 +69,25 @@ function ao_cal_render_admin_event_list_content() {
 
         ?>
             <div class="delete" style="padding: 13px;">
-                <button name="event-delete-button" data-id="<?php echo $event->id; ?>">X</button>
+                <button class="event-delete-button" data-id="<?php echo $event->id; ?>">X</button>
             </div>
         </div>
         <?php
+    }
+}
+
+
+
+/**
+ * Check GET params to see is ajax call is being made
+ */
+if (is_admin()) {
+
+    if ( isset($_GET['aoCalDeleteEvent']) && $_GET['aoCalDeleteEvent'] == 'alphaomegadevelopmentcalendar' ) {
+        if ( isset($_GET['aoCalEventID']) ) {
+            $id = $_GET['aoCalEventID'];
+            $aocal->db->delete($id);
+            die($id);
+        }
     }
 }

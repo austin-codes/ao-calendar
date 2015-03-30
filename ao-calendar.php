@@ -82,6 +82,44 @@ function ao_cal_render_display() {
 }
 
 /**
+ * Styles and Scripts
+ */
+
+add_action( 'wp_enqueue_scripts', 'aocal_enqueue_scripts_and_styles');
+add_action( 'admin_enqueue_scripts', 'aocal_enqueue_scripts_and_styles');
+
+function aocal_enqueue_scripts_and_styles() {
+    aocal_enqueue_styles();
+    aocal_enqueue_scripts();
+}
+
+/**
+ * Enqueue the CSS doc, and apply a filter that allows for
+ * future users to enqueue styles here as well.
+ */
+function aocal_enqueue_styles() {
+    wp_register_style( 'aocal-styles', plugins_url( 'ao-calendar/css/styles.css' ) );
+    $styles = array('aocal-styles');
+    $styles = apply_filters( 'ao-cal-enqueue-styles', $styles );
+    foreach ($styles as $style) {
+        wp_enqueue_style( $style );
+    }
+}
+
+/**
+ * Enqueue the JS doc, and apply a filter that allows for
+ * future users to enqueue scripts here as well.
+ */
+function aocal_enqueue_scripts(){
+    wp_register_script( 'aocal-scripts', plugins_url( 'ao-calendar/js/script.min.js') );
+    $scripts = array('aocal-scripts');
+    $scripts = apply_filters( 'ao-cal-enqueue-scripts', $scripts );
+    foreach ($scripts as $script) {
+        wp_enqueue_script( $script );
+    }
+}
+
+/**
  *AO Cal Class
  */
 

@@ -169,12 +169,12 @@ class AOCalDB {
         if (!is_array($data)) {
             return;
         }
-        $wpdb->update($this->sqltable, $data, array('ID' => $id));
+        $wpdb->update($this->sqltable, $data, array('id' => $id));
     }
 
     function delete($id) {
         global $wpdb;
-        $wpdb->delete($this->sqltable, array('ID' => $id));
+        $wpdb->delete($this->sqltable, array('id' => $id));
     }
 
     /**
