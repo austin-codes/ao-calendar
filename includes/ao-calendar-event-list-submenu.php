@@ -23,8 +23,6 @@ function ao_cal_register_event_list_submenu() {
           'aocal-event-list',
           'ao_cal_render_admin_event_list_submenu'
     );
-    //dump($_POST);
-
 }
 
 /**
@@ -53,7 +51,6 @@ function ao_cal_render_admin_event_list_content() {
     global $aocal;
 
     $events = $aocal->db->get();
-    // dump($events);
     foreach ($events as $event) {
         ?>
         <div class="event-row" style="display: flex; flex-direction: row;">

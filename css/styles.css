@@ -1,3 +1,28 @@
+.event-row .id {
+  width: 5%; }
+.event-row .title {
+  width: 10%; }
+.event-row .start-date {
+  width: 5%; }
+.event-row .end-date {
+  width: 5%; }
+.event-row .start-time {
+  width: 5%; }
+.event-row .end-time {
+  width: 5%; }
+.event-row .description {
+  width: 25%; }
+.event-row .location {
+  width: 5%; }
+.event-row .category {
+  width: 5%; }
+.event-row .source {
+  width: 5%; }
+.event-row .alternate-id {
+  width: 5%; }
+.event-row .delete {
+  width: 5%; }
+
 .ao-cal-display-container {
   width: 100%; }
   .ao-cal-display-container .ao-cal-header {
@@ -11,9 +36,10 @@
       text-align: center; }
       .ao-cal-display-container .ao-cal-header .ao-cal-date .ao-cal-month {
         font-weight: 900;
-        font-size: 2rem; }
+        font-size: 2.5rem; }
       .ao-cal-display-container .ao-cal-header .ao-cal-date .ao-cal-year {
-        font-style: italic; }
+        font-style: italic;
+        font-size: 2rem; }
     .ao-cal-display-container .ao-cal-header .next-button-container {
       flex-grow: 1;
       text-align: right; }
@@ -22,7 +48,8 @@
     width: 100%; }
     .ao-cal-display-container .ao-cal-display .month .week {
       display: flex;
-      flex-direction: row; }
+      flex-direction: row;
+      position: relative; }
       .ao-cal-display-container .ao-cal-display .month .week .day {
         min-width: 14.2857%;
         padding: 5px;
@@ -41,23 +68,27 @@
           padding: 5px;
           margin-top: 5px;
           margin-bottom: 5px;
-          border-radius: 5px;
-          word-break: break-all; }
+          border-radius: 5px; }
           .ao-cal-display-container .ao-cal-display .month .week .day .event .event-more-info {
             display: none; }
-        .ao-cal-display-container .ao-cal-display .month .week .day .event.active {
-          position: relative; }
-          .ao-cal-display-container .ao-cal-display .month .week .day .event.active .event-more-info {
-            min-width: 350px;
-            display: block;
-            position: absolute;
-            left: 100%;
-            top: 0;
-            border: solid 3px;
-            background: #ababab;
-            color: #fff;
-            padding: 13px;
-            word-break: normal; }
+        .ao-cal-display-container .ao-cal-display .month .week .day .event.active .event-more-info {
+          min-width: 350px;
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 100%;
+          z-index: 360;
+          border: solid 3px;
+          background: #ababab;
+          color: #fff;
+          padding: 13px; }
     .ao-cal-display-container .ao-cal-display.loading {
       font-size: 5rem;
       text-align: center; }
+
+@media only screen and (max-width: 500px) {
+  .event {
+    position: relative; }
+
+  .ao-cal-display-container .ao-cal-display .month .week {
+    flex-direction: column; } }

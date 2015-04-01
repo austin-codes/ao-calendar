@@ -87,3 +87,34 @@ add_filter('aocal-date-divide-display', 'aocal_change_date_divide_display');
 function aocal_change_date_divide_display($d) {
     return ' ';
 }
+
+add_filter('ao-cal-event-start-time-filter', 'aocal_render_time_display');
+add_filter('ao-cal-event-end-time-filter', 'aocal_render_time_display');
+
+function aocal_render_time_display($d) {
+    $time_array = explode(':', $d);
+    $h = $time_array[0];
+    $m = $time_array[1];
+    if ($h > 12) {
+        $suf = 'PM';
+        $h = intval($h) - 12;
+    }
+    else {
+        $suf = 'AM';
+    }
+    return $h . ':' . $m . ' ' . $suf;
+}
+
+
+
+add_filter('ao-cal-event-start-date-filter', 'aocal_render_date_display');
+add_filter('ao-cal-event-end-date-filter', 'aocal_render_date_display');
+
+function aocal_render_date_display($date) {
+    $date_array = explode('-', $date);
+    $y = $date_array[0];
+    $m = $date_array[1];
+    $d = $date_array[2];
+
+    return $d . ' ' . date('F', mktime(0, 0, 0, $m, 10)) . ' ' . $y;
+}

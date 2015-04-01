@@ -49,16 +49,16 @@ class AOCalDB {
                         start_time text NOT NULL,
                         end_time text NOT NULL,
                         description longtext NOT NULL,
-                        location text NOT NULL,
-                        category text NOT NULL,
-                        source text NOT NULL,
-                        alternate_id text NOT NULL,
+                        location text,
+                        category text,
+                        source text,
+                        alternate_id text,
                         PRIMARY KEY (id)
                     )
                 CHARACTER SET utf8
                 COLLATE utf8_general_ci;";
 
-            $sql = apply_filter('aocal-sql-table', $sql);
+            $sql = apply_filters('aocal-sql-table', $sql);
             dbDelta($sql);
         }
     }
@@ -138,6 +138,7 @@ class AOCalDB {
 
         if ($indi) {
             $response = $wpdb->get_row($this->statement);
+            if (is_null($response)) {return '';}
             if (count(get_object_vars($response)) == 1) {
                 foreach ($response as $r) {
                     $result = $r;
