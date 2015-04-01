@@ -84,7 +84,10 @@ if (is_admin()) {
         if ( isset($_GET['aoCalEventID']) ) {
             $id = $_GET['aoCalEventID'];
             $aocal->db->delete($id);
-            die($id);
+            $dieMessage = $id;
+
+            remove_all_actions('init');
+            add_action('init', '_eDie');
         }
     }
 }
