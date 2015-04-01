@@ -249,9 +249,9 @@ class AOCalDB {
             /**
              * $source array schema:
              * array(
-             * 		array($source, $target, $comp),
-             * 		array($source, $target, $comp),
-             * 		array($source, $target, $comp)
+             * 		array($source, $target, $comp, $follow),
+             * 		array($source, $target, $comp, $follow),
+             * 		array($source, $target, $comp, $follow)
              * );
              *
              *
@@ -277,11 +277,18 @@ class AOCalDB {
                     // set the target of the sub array
                     $sql .= $s[1] . ' ';
 
+
                     if (count($source) - 1 == array_search($s, $source)) {
                         $sql .= '';
                     }
                     else {
-                        $sql .= 'AND ';
+                        if ($target) {
+                            $sql .= $target . ' ';
+                        }
+                        else {
+                            $sql .= 'AND ';
+                        }
+
                     }
                 }
             }
@@ -309,6 +316,7 @@ class AOCalDB {
         else {
             $this->statement = $stmt;
         }
+        return $this->statement;
     }
 
 

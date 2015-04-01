@@ -1,0 +1,27 @@
+.ao-cal-display-container .ao-cal-header {
+  display: flex;
+  flex-direction: row; }
+  .ao-cal-display-container .ao-cal-header .prev-button-container {
+    flex-grow: 1;
+    text-align: left; }
+  .ao-cal-display-container .ao-cal-header .ao-cal-month {
+    flex-grow: 2; }
+  .ao-cal-display-container .ao-cal-header .next-button-container {
+    flex-grow: 1;
+    text-align: right; }
+.ao-cal-display-container .ao-cal-display .month .week {
+  display: flex;
+  flex-direction: row; }
+  .ao-cal-display-container .ao-cal-display .month .week .day {
+    min-width: 14.2857%;
+    padding: 5px; }
+    .ao-cal-display-container .ao-cal-display .month .week .day .date-display {
+      font-weight: 900; }
+    .ao-cal-display-container .ao-cal-display .month .week .day .event {
+      background: #cccccc;
+      padding: 5px;
+      margin-bottom: 13px;
+      border-radius: 5px; }
+.ao-cal-display-container .ao-cal-display.loading {
+  font-size: 5rem;
+  text-align: center; }

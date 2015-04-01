@@ -1,0 +1,53 @@
+.ao-cal-display-container {
+
+    .ao-cal-header {
+        display: flex;
+        flex-direction: row;
+        .prev-button-container {
+            flex-grow: 1;
+            text-align: left;
+            .prev-button {}
+        }
+
+        .ao-cal-month {
+            flex-grow: 2;
+            .ao-cal-month {}
+            .ao-cal-year {}
+        }
+
+        .next-button-container {
+            flex-grow: 1;
+            text-align: right;
+            .next-button {}
+        }
+    }
+
+
+    .ao-cal-display {
+        .month {
+            .week {
+                display: flex;
+                flex-direction: row;
+                .day {
+                    min-width: 14.2857%;
+                    padding: 5px;
+                    .date-display {
+                        font-weight: 900;
+                    }
+                    .event {
+                        background: #cccccc;
+                        padding: 5px;
+                        margin-bottom: 13px;
+                        border-radius: 5px;
+                    }
+                }
+            }
+        }
+
+        &.loading {
+            font-size: 5rem;
+            text-align: center;
+        }
+    }
+
+}

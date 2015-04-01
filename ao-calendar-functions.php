@@ -17,9 +17,28 @@
  * @since 1.0.0
  * @return STRING JSON string on events
  */
-function ao_cal_gather_events() {
+function ao_cal_gather_events($m, $y) {
+    global $aocal;
+
+    if ($m < 10) { $m = '0' . $m; }
+
+    $where = array(
+        array( 'start_date', '"' . $y . '-' . $m . '%"', 'LIKE' ),
+        array( 'end_date', '"' . $y . '-' . $m . '%"', 'LIKE' )
+    );
+    $where = apply_filters( 'aocal-gather-events-where-filter', $where );
+
+    $comp = 'OR';
+    $comp = apply_filters( 'aocal-gather-events-comp-filter', $comp );
+
+
     // Retrieve all events from the database
-    return '';
+    $aocal->db->where( $where, $comp);
+
+    $events = $aocal->db->get();
+
+    $events = apply_filters( 'aocal-events-filter', $events);
+    return ao_cal_sort_events($events, $m, $y);
 }
 
 
@@ -43,3 +62,28 @@ if (!function_exists('dump')) {
             dump ($var, $label, $echo);exit;
         }
     }
+
+
+
+
+
+
+
+/**
+ * Filters
+ */
+
+
+add_filter( 'aocal-month-display', 'aocal_change_month_display');
+
+function aocal_change_month_display($mon) {
+    $monthName = date('F', mktime(0, 0, 0, $mon, 10));
+    return $monthName;
+}
+
+
+add_filter('aocal-date-divide-display', 'aocal_change_date_divide_display');
+
+function aocal_change_date_divide_display($d) {
+    return ' ';
+}
