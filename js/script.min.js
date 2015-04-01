@@ -28,6 +28,20 @@ function aoCalEventDeleteButton() {
 
 }
 
+function aoCalAttachEvents() {
+    jQuery('.event').on('click', function () {
+        event.stopPropagation();
+        jQuery('.event.active').removeClass('active');
+        jQuery(this).addClass('active');
+    });
+
+    jQuery('html').on('click', function() {
+        jQuery('.event.active').removeClass('active');
+    });
+}
+
+
+
 function aoCalSetMonth() {
     var display = jQuery('#ao-cal-display');
     var mon = parseInt(display.attr('data-month'));
@@ -42,6 +56,7 @@ function aoCalSetMonth() {
         //console.log('Query Made');
         display.html(JSON.parse(r));
         display.removeClass('loading');
+        aoCalAttachEvents();
     });
 
 
@@ -58,6 +73,8 @@ function aoCalSetMonth() {
     }, function (y) {
         jQuery('.ao-cal-year').html(y);
     });
+
+
 }
 
 function aoCalAttachCalendarControls() {

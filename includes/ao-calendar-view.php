@@ -45,18 +45,47 @@ function aocal_render_calendar_month($month) {
 
 function aocal_render_calendar_day($day) {
     ob_start();
-    ?>
 
-    <div class="date-display">
-        <?php if ($day['date'] != '0') {echo $day['date'];} ?>
-    </div>
+    if ($day['date'] != '0') {
+        ?>
+        <div class="date-display">
+            <?php echo $day['date']; ?>
+        </div>
+        <?php
+    }
+    else {
+        ?>
+        <div class="empty-date-display"></div>
+        <?php
+    }
 
-    <?php
 
     foreach ($day['event-list'] as $event) {
         ?>
         <div class="event">
             <?php echo $event->title; ?>
+            <div class="event-more-info">
+                <div class="event-start-date">
+                    <strong>Start Date:</strong>
+                    <?php echo $event->start_date; ?>
+                </div>
+                <div class="event-start-time">
+                    <strong>Start Time:</strong>
+                    <?php echo $event->start_time; ?>
+                </div>
+                <div class="event-end-date">
+                    <strong>End Date:</strong>
+                    <?php echo $event->end_date; ?>
+                </div>
+                <div class="event-end-time">
+                    <strong>End Time:</strong>
+                    <?php echo $event->end_time; ?>
+                </div>
+                <div class="event-description">
+                    <strong>Description:</strong>
+                    <?php echo $event->description; ?>
+                </div>
+            </div>
         </div>
         <?php
     }

@@ -1,27 +1,63 @@
-.ao-cal-display-container .ao-cal-header {
-  display: flex;
-  flex-direction: row; }
-  .ao-cal-display-container .ao-cal-header .prev-button-container {
-    flex-grow: 1;
-    text-align: left; }
-  .ao-cal-display-container .ao-cal-header .ao-cal-month {
-    flex-grow: 2; }
-  .ao-cal-display-container .ao-cal-header .next-button-container {
-    flex-grow: 1;
-    text-align: right; }
-.ao-cal-display-container .ao-cal-display .month .week {
-  display: flex;
-  flex-direction: row; }
-  .ao-cal-display-container .ao-cal-display .month .week .day {
-    min-width: 14.2857%;
-    padding: 5px; }
-    .ao-cal-display-container .ao-cal-display .month .week .day .date-display {
-      font-weight: 900; }
-    .ao-cal-display-container .ao-cal-display .month .week .day .event {
-      background: #cccccc;
-      padding: 5px;
-      margin-bottom: 13px;
-      border-radius: 5px; }
-.ao-cal-display-container .ao-cal-display.loading {
-  font-size: 5rem;
-  text-align: center; }
+.ao-cal-display-container {
+  width: 100%; }
+  .ao-cal-display-container .ao-cal-header {
+    display: flex;
+    flex-direction: row; }
+    .ao-cal-display-container .ao-cal-header .prev-button-container {
+      flex-grow: 1;
+      text-align: left; }
+    .ao-cal-display-container .ao-cal-header .ao-cal-date {
+      flex-grow: 2;
+      text-align: center; }
+      .ao-cal-display-container .ao-cal-header .ao-cal-date .ao-cal-month {
+        font-weight: 900;
+        font-size: 2rem; }
+      .ao-cal-display-container .ao-cal-header .ao-cal-date .ao-cal-year {
+        font-style: italic; }
+    .ao-cal-display-container .ao-cal-header .next-button-container {
+      flex-grow: 1;
+      text-align: right; }
+  .ao-cal-display-container .ao-cal-display {
+    margin-top: 13px;
+    width: 100%; }
+    .ao-cal-display-container .ao-cal-display .month .week {
+      display: flex;
+      flex-direction: row; }
+      .ao-cal-display-container .ao-cal-display .month .week .day {
+        min-width: 14.2857%;
+        padding: 5px;
+        border-bottom: 1px solid; }
+        .ao-cal-display-container .ao-cal-display .month .week .day .empty-date-display {
+          max-width: 50%;
+          min-width: 25px; }
+        .ao-cal-display-container .ao-cal-display .month .week .day .date-display {
+          font-weight: 900;
+          max-width: 50%;
+          min-width: 25px;
+          text-align: center;
+          border-radius: 5px; }
+        .ao-cal-display-container .ao-cal-display .month .week .day .event {
+          border: 1px solid;
+          padding: 5px;
+          margin-top: 5px;
+          margin-bottom: 5px;
+          border-radius: 5px;
+          word-break: break-all; }
+          .ao-cal-display-container .ao-cal-display .month .week .day .event .event-more-info {
+            display: none; }
+        .ao-cal-display-container .ao-cal-display .month .week .day .event.active {
+          position: relative; }
+          .ao-cal-display-container .ao-cal-display .month .week .day .event.active .event-more-info {
+            min-width: 350px;
+            display: block;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            border: solid 3px;
+            background: #ababab;
+            color: #fff;
+            padding: 13px;
+            word-break: normal; }
+    .ao-cal-display-container .ao-cal-display.loading {
+      font-size: 5rem;
+      text-align: center; }

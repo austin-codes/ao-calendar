@@ -53,7 +53,7 @@ function ao_cal_render_admin_event_list_content() {
     global $aocal;
 
     $events = $aocal->db->get();
-    dump($events);
+    // dump($events);
     foreach ($events as $event) {
         ?>
         <div class="event-row" style="display: flex; flex-direction: row;">
