@@ -28,3 +28,4 @@ config.codekit
 sftp-config.json
 
 *.DS_STORE
+.git/*
