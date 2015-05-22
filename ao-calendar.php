@@ -66,9 +66,10 @@ function ao_cal_render_display() {
     // ----- Allowing for future advancement
     $fullMonth = apply_filters('ao-cal-display-month', $fullMonth);
 
+
     ob_start();
     ?>
-    <div id="ao-cal-display-container" class="ao-cal-display-container">
+    <div id="ao-cal-display-container" class="ao-cal-display-container <?php echo apply_filters('ao-cal-container-class', ''); ?>">
         <div class="ao-cal-header">
             <div class="prev-button-container">
                 <button name="prev-button" class="prev-button"><?php echo apply_filters('aocal-prev-button', '<<'); ?></button>
@@ -84,7 +85,8 @@ function ao_cal_render_display() {
                 <button name="next-button" class="next-button"><?php echo apply_filters('aocal-next-button', '>>'); ?></button>
             </div>
         </div>
-        <div id="ao-cal-display" class="ao-cal-display loading" data-month="<?php echo $month; ?>" data-year="<?php echo $year; ?>"><i class="fa fa-cog fa-spin"></i></div>
+        <!-- <div id="ao-cal-display" class="ao-cal-display loading" data-month="<?php echo $month; ?>" data-year="<?php echo $year; ?>"><i class="fa fa-cog fa-spin"></i></div> -->
+        <div id="ao-cal-display" class="ao-cal-display loading" data-month="<?php echo $month; ?>" data-year="<?php echo $year; ?>"><?php echo aocal_render_calendar_month($fullMonth); ?></div>
     </div>
     <?php
 
@@ -148,11 +150,6 @@ class AOCal {
     function __construct() {
         $this->db = new AOCalDB();
         $this->db->select(array('start_time', 'end_time'));
-        // $this->db->from('post', 'message', 'post.id = message.post_id');
-        // $this->db->where(array(
-        //     array('animal', 'cow'),
-        //     array('birthday', '11-20-1991', '>=')
-        // ));
         $this->db->get(NULL, TRUE);
     }
 }
@@ -160,12 +157,18 @@ class AOCal {
 global $aocal;
 $aocal = new AOCal();
 
+/**
+ * Message to be given upon error
+ */
 global $dieMessage;
 $dieMessage = '';
 
+/**
+ * Function used to kill pages
+ * and give errors or ajax responses
+ */
 function _eDie() {
     global $dieMessage;
-
     die($dieMessage);
 }
 
@@ -177,7 +180,7 @@ function _eDie() {
 
 
 /**
- * Check to see if the requested page is a nadmin page,
+ * Check to see if the requested page is an admin page,
  * then let's make sure that the user is
  * actually logged in
  */
@@ -190,7 +193,10 @@ if ( is_admin() && is_user_logged_in() ) {
  * Functionality for the website
  * ----- ----- ----- ----- -----
  */
+
+
 else if (isset($_GET['aoCalRenderMonth']) && $_GET['aoCalRenderMonth'] === 'alphaomegadevelopmentcalendar') {
+
 
     if ( isset($_GET['aoCalMonth']) && isset($_GET['aoCalYear']) ) {
         $month = intval($_GET['aoCalMonth']);

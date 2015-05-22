@@ -1,14 +1,12 @@
 <?php
 /**
- *
- *
  * @author Austin Adamson
  * @since 1.0.0
  */
 
 
 /**
- * [aocal_render_calendar_month description]
+ * Render the month display
  * @param  ARRAY $month Array of arrays simulating the month
  * @return STRING        [description]
  */
@@ -40,7 +38,11 @@ function aocal_render_calendar_month($month) {
     return $output;
 }
 
-
+/**
+ * HTML formatting for a single day of the calendar
+ * @param  [type] $day [description]
+ * @return [type]      [description]
+ */
 function aocal_render_calendar_day($day) {
     ob_start();
     if ($day['date'] != '0') {

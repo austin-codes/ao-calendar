@@ -24,6 +24,7 @@ function ao_cal_register_admin_menu() {
         'dashicons-schedule',
         100
     );
+    do_action('ao_cal_register_admin_menus');
 }
 
 /**

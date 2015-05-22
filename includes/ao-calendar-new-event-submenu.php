@@ -56,7 +56,7 @@ function ao_cal_render_admin_add_new_content() {
 
 
 /**
- * [ao_cal_render_admin_add_new_form description]
+ * Render the form to add new events
  * @since 1.0.0
  */
 function ao_cal_render_admin_add_new_form() {
@@ -83,7 +83,7 @@ function ao_cal_render_admin_add_new_form() {
 }
 
 /**
- * [ao_cal_render_admin_add_new_form_table_row description]
+ * Takes the desired input type and renders appropriate form row
  * @param {[type]} $label [description]
  * @param {[type]} $name  [description]
  * @param {[type]} $type  [description]
@@ -108,7 +108,7 @@ function ao_cal_render_admin_add_new_form_table_row($label, $name, $type) {
 
 
 /**
-* [ao_cal_render_admin_add_new_form_table_row description]
+* Renders a table row for form text inputs
 * @param {[type]} $label [description]
 * @param {[type]} $name  [description]
 * @param {[type]} $type  [description]
@@ -130,7 +130,7 @@ function ao_cal_render_admin_add_text_form_table_row($label, $name) {
 }
 
 /**
-* [ao_cal_render_admin_add_new_form_table_row description]
+* Renders a table row for form date inputs
 * @param {[type]} $label [description]
 * @param {[type]} $name  [description]
 * @param {[type]} $type  [description]
@@ -152,7 +152,7 @@ function ao_cal_render_admin_add_date_form_table_row($label, $name) {
 }
 
 /**
-* [ao_cal_render_admin_add_new_form_table_row description]
+* Renders a table row for form time inputs
 * @param {[type]} $label [description]
 * @param {[type]} $name  [description]
 * @param {[type]} $type  [description]
@@ -174,7 +174,7 @@ function ao_cal_render_admin_add_time_form_table_row($label, $name) {
 }
 
 /**
-* [ao_cal_render_admin_add_new_form_table_row description]
+* Renders a table row for form textarea inputs
 * @param {[type]} $label [description]
 * @param {[type]} $name  [description]
 * @param {[type]} $type  [description]
@@ -200,6 +200,7 @@ function ao_cal_render_admin_add_textarea_form_table_row($label, $name) {
  * Check GET Parameter to see if we need to add an event.
  */
 
+ 
  global $aocal;
  if (isset($_POST['new-event-submit']) && $_POST['new-event-submit'] === 'Add Event') {
      $new_event = array(

@@ -15,14 +15,15 @@ add_action('admin_menu', 'ao_cal_register_event_list_submenu', 20);
  * @since 1.0.0
  */
 function ao_cal_register_event_list_submenu() {
-        add_submenu_page(
-          'aocal-main',
-          'Event List',
-          'Event List',
-          'manage_options',
-          'aocal-event-list',
-          'ao_cal_render_admin_event_list_submenu'
+    add_submenu_page(
+      'aocal-main',
+      'Event List',
+      'Event List',
+      'manage_options',
+      'aocal-event-list',
+      'ao_cal_render_admin_event_list_submenu'
     );
+    do_action('ao-cal-register-event-list-submenu');
 }
 
 /**

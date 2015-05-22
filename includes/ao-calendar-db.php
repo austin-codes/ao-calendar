@@ -3,7 +3,8 @@
 /**
 * Class used to build and manipulate
 * the AO Calendar event table
-* @author Austin Adamson AO Development
+* @author Austin Adamson
+* @author aodev
 *
 * @since 1.0.0
 */
@@ -15,7 +16,7 @@ class AOCalDB {
     private $from = 'FROM wp_posts';
     private $where = '';
 
-    private $statement = '';
+    private $statement = NULL;
 
 
     /**
@@ -111,17 +112,14 @@ class AOCalDB {
             'category' => $data['category'],
             'alternate_id' => $data['alternate_id'],
         );
-
         foreach ( $row as $key=>$val ) {
             $row[$key] = $this->filter_input( $val );
         }
-
         $wpdb->insert( $this->sqltable, $row );
-
     }
 
     /**
-     * [get description]
+     * Retrieves desired information from the database table.
      * @param  [type] $id   ID of specific desired row
      * @param  BOOL $indi   Whether or not you want a single response
      * @param  [type] $str  [description]
@@ -130,11 +128,18 @@ class AOCalDB {
      */
     function get($id = NULL, $indi = FALSE, $str = NULL, $reset = TRUE) {
         global $wpdb;
+
+        // If an ID is set then we know what row we want,
+        // so we set the ID to be specifically that row.
         if (isset($id)) {
             $this->where('ID', $id);
         }
-        $this->statement();
-        // dump($this->statement);
+
+        // Build the statement.
+        if (is_null($this->statement)) {
+            $this->statement();
+        }
+
 
         if ($indi) {
             $response = $wpdb->get_row($this->statement);
@@ -154,8 +159,6 @@ class AOCalDB {
         }
 
 
-        // dump($result);
-
         if ($reset) {
             $this->reset();
         }
@@ -164,6 +167,12 @@ class AOCalDB {
         return $result;
     }
 
+    /**
+     * Update row.
+     * @param  INT/STRING $id   ID of row to be changed
+     * @param  ARRAY $data The information to be updated
+     * @return
+     */
     function update($id, $data) {
         global $wpdb;
 
@@ -173,6 +182,11 @@ class AOCalDB {
         $wpdb->update($this->sqltable, $data, array('id' => $id));
     }
 
+    /**
+     * Delete an entry at the database table
+     * @param  INT/STRING $id ID of the row to be deleted
+     * @return
+     */
     function delete($id) {
         global $wpdb;
         $wpdb->delete($this->sqltable, array('id' => $id));
@@ -183,9 +197,9 @@ class AOCalDB {
      */
 
     /**
-     * [select description]
-     * @param  [type] $select [description]
-     * @return [type]         [description]
+     * Format the select portion of the SQL statement.
+     * @param  STRING/ARRAY $select String with values or array of values to select
+     * @return
      */
     function select($select) {
 
@@ -219,7 +233,10 @@ class AOCalDB {
     }
 
     /**
-     * [from description]
+     * Format the from join portions of the MySQL query
+     *
+     * TODO: Not thoroughly tested, however, it is also not used here.
+     *
      * @param  [type] $left_table  [description]
      * @param  [type] $right_table [description]
      * @param  string $join        [description]
@@ -239,8 +256,8 @@ class AOCalDB {
     }
 
     /**
-     * [where description]
-     * @param  [type] $source [description]
+     * Build the where portion of the MySQL query
+     * @param  STRING/ARRAY $source String: Column. Array: View schema below.
      * @param  [type] $target [description]
      * @param  string $comp   [description]
      * @return [type]         [description]
@@ -306,8 +323,8 @@ class AOCalDB {
     }
 
     /**
-     * [statement description]
-     * @param  [type] $stmt [description]
+     * Format the statement
+     * @param  [type] $stmt Optional statement to use.
      * @return [type]       [description]
      */
     function statement($stmt = NULL) {
@@ -336,12 +353,15 @@ class AOCalDB {
         return $input;
     }
 
+    /**
+     * Reset class variables to defualts
+     */
     function reset() {
         global $wpdb;
         $this->sqltable = $wpdb->prefix .  'ao_cal_events';
         $this->select = 'SELECT *';
         $this->from = 'FROM ' . $this->sqltable;
         $this->where = '';
-        $this->statement = '';
+        $this->statement = NULL;
     }
 }
