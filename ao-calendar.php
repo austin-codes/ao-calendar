@@ -3,9 +3,9 @@
  * Plugin Name: AO Calendar
  * Plugin URI:
  * Description: Creates a base calendar event system
- * Author: Austin Adamson
- * Version: 0.0.1
- * Author URI: http://austinleeadamson.com/
+ * Author: aodev.io
+ * Version: 1.0.0
+ * Author URI: http://plugins.aodev.io
  */
 
 
