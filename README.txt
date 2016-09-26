@@ -1,7 +1,7 @@
-=== AO Calednar ===
-Contributors: aodev, widely_interactive
-Donate link: aodev.io
-Tags: calendar, aodev, widely interactive, widely-interactive
+=== AO Calendar ===
+Contributors: aodev
+Donate link:
+Tags: calendar, aodev
 Requires at least: 4.0
 Tested up to: 4.2
 Stable tag: 1.0.0
