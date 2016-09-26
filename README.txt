@@ -1,7 +1,7 @@
 === AO Calendar ===
-Contributors: aodev
+Contributors: aodev.io
 Donate link:
-Tags: calendar, aodev
+Tags: calendar, aodev.io
 Requires at least: 4.0
 Tested up to: 4.2
 Stable tag: 1.0.0
@@ -27,8 +27,6 @@ The concept behind the AO Calendar is to create a simple calendar plugin for Wor
 
 = None Yet =
 * If you have a question then feel free to ask us in the support threads.
-
-== Screenshots ==
 
 == Changelog ==
 
