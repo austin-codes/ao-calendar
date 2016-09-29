@@ -4,7 +4,7 @@
  * Plugin URI:
  * Description: Creates a base calendar event system
  * Author: aodev.io
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author URI: http://plugins.aodev.io
  */
 

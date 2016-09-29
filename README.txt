@@ -30,6 +30,9 @@ The concept behind the AO Calendar is to create a simple calendar plugin for Wor
 
 == Changelog ==
 
+= 1.0.2 =
+* Correcting the issues that I broke in the 1.0.1 update. 
+
 = 1.0.1 =
 * Making changes requested by WordPress plugin review team.
 * Changed various function names.
