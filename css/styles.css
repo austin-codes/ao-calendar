@@ -26,13 +26,22 @@
 .ao-cal-display-container {
   width: 100%; }
   .ao-cal-display-container .ao-cal-header {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: row; }
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row; }
     .ao-cal-display-container .ao-cal-header .prev-button-container {
-      flex-grow: 1;
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
       text-align: left; }
     .ao-cal-display-container .ao-cal-header .ao-cal-date {
-      flex-grow: 2;
+      -webkit-box-flex: 2;
+          -ms-flex-positive: 2;
+              flex-grow: 2;
       text-align: center; }
       .ao-cal-display-container .ao-cal-header .ao-cal-date .ao-cal-month {
         font-weight: 900;
@@ -41,14 +50,21 @@
         font-style: italic;
         font-size: 2rem; }
     .ao-cal-display-container .ao-cal-header .next-button-container {
-      flex-grow: 1;
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
       text-align: right; }
   .ao-cal-display-container .ao-cal-display {
     margin-top: 13px;
     width: 100%; }
     .ao-cal-display-container .ao-cal-display .month .week {
+      display: -webkit-box;
+      display: -ms-flexbox;
       display: flex;
-      flex-direction: row;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: row;
+              flex-direction: row;
       position: relative; }
       .ao-cal-display-container .ao-cal-display .month .week .day {
         min-width: 14.2857%;
@@ -91,4 +107,7 @@
     position: relative; }
 
   .ao-cal-display-container .ao-cal-display .month .week {
-    flex-direction: column; } }
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column; } }

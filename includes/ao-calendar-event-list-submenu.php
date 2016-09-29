@@ -88,7 +88,7 @@ if (is_admin()) {
             $dieMessage = $id;
 
             remove_all_actions('init');
-            add_action('init', '_eDie');
+            add_action('init', 'ao_cal_eDie');
         }
     }
 }
