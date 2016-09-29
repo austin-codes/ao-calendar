@@ -42,24 +42,24 @@ if (!function_exists('dump_exit')) {
  */
 
 
-add_filter( 'aocal-month-display', 'aocal_change_month_display');
+add_filter( 'aocal-month-display', 'ao_cal_change_month_display');
 
-function aocal_change_month_display($mon) {
+function ao_cal_change_month_display($mon) {
     $monthName = date('F', mktime(0, 0, 0, $mon, 10));
     return $monthName;
 }
 
 
-add_filter('aocal-date-divide-display', 'aocal_change_date_divide_display');
+add_filter('aocal-date-divide-display', 'ao_cal_change_date_divide_display');
 
-function aocal_change_date_divide_display($d) {
+function ao_cal_change_date_divide_display($d) {
     return ' ';
 }
 
-add_filter('ao-cal-event-start-time-filter', 'aocal_render_time_display');
-add_filter('ao-cal-event-end-time-filter', 'aocal_render_time_display');
+add_filter('ao-cal-event-start-time-filter', 'ao_cal_render_time_display');
+add_filter('ao-cal-event-end-time-filter', 'ao_cal_render_time_display');
 
-function aocal_render_time_display($d) {
+function ao_cal_render_time_display($d) {
     $time_array = explode(':', $d);
     $h = $time_array[0];
     $m = $time_array[1];
@@ -75,10 +75,10 @@ function aocal_render_time_display($d) {
 
 
 
-add_filter('ao-cal-event-start-date-filter', 'aocal_render_date_display');
-add_filter('ao-cal-event-end-date-filter', 'aocal_render_date_display');
+add_filter('ao-cal-event-start-date-filter', 'ao_cal_render_date_display');
+add_filter('ao-cal-event-end-date-filter', 'ao_cal_render_date_display');
 
-function aocal_render_date_display($date) {
+function ao_cal_render_date_display($date) {
     $date_array = explode('-', $date);
     $y = $date_array[0];
     $m = $date_array[1];

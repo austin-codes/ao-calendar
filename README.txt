@@ -1,10 +1,10 @@
 === AO Calendar ===
-Contributors: aodev
+Contributors: aodev.io
 Donate link:
-Tags: calendar, aodev
+Tags: calendar, aodev.io
 Requires at least: 4.0
 Tested up to: 4.2
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,9 +28,15 @@ The concept behind the AO Calendar is to create a simple calendar plugin for Wor
 = None Yet =
 * If you have a question then feel free to ask us in the support threads.
 
-== Screenshots ==
-
 == Changelog ==
+
+= 1.0.2 =
+* Correcting the issues that I broke in the 1.0.1 update. 
+
+= 1.0.1 =
+* Making changes requested by WordPress plugin review team.
+* Changed various function names.
+* Removed reference to internal jQuery file.
 
 = 1.0.0 =
 * Initial Release.

@@ -10,7 +10,7 @@
  * @param  ARRAY $month Array of arrays simulating the month
  * @return STRING        [description]
  */
-function aocal_render_calendar_month($month) {
+function ao_cal_render_calendar_month($month) {
     ob_start();
     ?>
     <div class="month">
@@ -22,7 +22,7 @@ function aocal_render_calendar_month($month) {
                 foreach ( $week as $day) {
                     ?>
                     <div class="day" data-day="<?php echo $day['date']; ?>">
-                        <?php echo aocal_render_calendar_day($day); ?>
+                        <?php echo ao_cal_render_calendar_day($day); ?>
                     </div>
                     <?php
                 }
@@ -43,7 +43,7 @@ function aocal_render_calendar_month($month) {
  * @param  [type] $day [description]
  * @return [type]      [description]
  */
-function aocal_render_calendar_day($day) {
+function ao_cal_render_calendar_day($day) {
     ob_start();
     if ($day['date'] != '0') {
         ?>
@@ -56,6 +56,9 @@ function aocal_render_calendar_day($day) {
         ?>
         <div class="empty-date-display"></div>
         <?php
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
     }
     foreach ($day['event-list'] as $event) {
         ?>

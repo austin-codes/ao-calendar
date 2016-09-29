@@ -4,7 +4,7 @@
  * Plugin URI:
  * Description: Creates a base calendar event system
  * Author: aodev.io
- * Version: 1.0.0
+ * Version: 1.0.2
  * Author URI: http://plugins.aodev.io
  */
 
@@ -17,16 +17,17 @@ defined('ABSPATH') or die("YOU SHALL NOT PASS");
 /**
  * Define constants
  */
-define( "AO_PLUGINS_PATH", plugin_dir_path(dirname(__FILE__)) );
-define( "AO_CAL_DIR", AO_PLUGINS_PATH . 'ao-calendar/' );
+
+// Store filesystem path to this plugin's directory
+define( "AO_DEV_CAL_DIR", plugin_dir_path(__FILE__) );
 
 /**
  * Require General Files
  */
-require_once( AO_PLUGINS_PATH . 'ao-calendar/includes/ao-calendar-db.php' );
-require_once( AO_PLUGINS_PATH . 'ao-calendar/includes/ao-calendar-event-sorting.php' );
-require_once( AO_PLUGINS_PATH . 'ao-calendar/includes/ao-calendar-view.php' );
-require_once( AO_PLUGINS_PATH . 'ao-calendar/ao-calendar-functions.php' );
+require_once( AO_DEV_CAL_DIR . 'includes/ao-calendar-db.php' );
+require_once( AO_DEV_CAL_DIR . 'includes/ao-calendar-event-sorting.php' );
+require_once( AO_DEV_CAL_DIR . 'includes/ao-calendar-view.php' );
+require_once( AO_DEV_CAL_DIR . 'ao-calendar-functions.php' );
 require_once( ABSPATH . 'wp-includes/pluggable.php' );
 
 
@@ -41,11 +42,11 @@ require_once( ABSPATH . 'wp-includes/pluggable.php' );
  */
 function ao_cal_execute_admin() {
     // ----- Require the main admin page
-    require_once( AO_PLUGINS_PATH . 'ao-calendar/includes/ao-calendar-admin.php' );
+    require_once( AO_DEV_CAL_DIR . 'includes/ao-calendar-admin.php' );
 
     // ----- Require submenus
-    require_once( AO_PLUGINS_PATH . 'ao-calendar/includes/ao-calendar-new-event-submenu.php' );
-    require_once( AO_PLUGINS_PATH . 'ao-calendar/includes/ao-calendar-event-list-submenu.php' );
+    require_once( AO_DEV_CAL_DIR . 'includes/ao-calendar-new-event-submenu.php' );
+    require_once( AO_DEV_CAL_DIR . 'includes/ao-calendar-event-list-submenu.php' );
 }
 
 /**
@@ -66,7 +67,6 @@ function ao_cal_render_display() {
     // ----- Allowing for future advancement
     $fullMonth = apply_filters('ao-cal-display-month', $fullMonth);
 
-
     ob_start();
     ?>
     <div id="ao-cal-display-container" class="ao-cal-display-container <?php echo apply_filters('ao-cal-container-class', ''); ?>">
@@ -86,7 +86,7 @@ function ao_cal_render_display() {
             </div>
         </div>
         <!-- <div id="ao-cal-display" class="ao-cal-display loading" data-month="<?php echo $month; ?>" data-year="<?php echo $year; ?>"><i class="fa fa-cog fa-spin"></i></div> -->
-        <div id="ao-cal-display" class="ao-cal-display loading" data-month="<?php echo $month; ?>" data-year="<?php echo $year; ?>"><?php echo aocal_render_calendar_month($fullMonth); ?></div>
+        <div id="ao-cal-display" class="ao-cal-display loading" data-month="<?php echo $month; ?>" data-year="<?php echo $year; ?>"><?php echo ao_cal_render_calendar_month($fullMonth); ?></div>
     </div>
     <?php
 
@@ -103,21 +103,22 @@ function ao_cal_render_display() {
  * Styles and Scripts
  */
 
-add_action( 'wp_enqueue_scripts', 'aocal_enqueue_scripts_and_styles');
-add_action( 'admin_enqueue_scripts', 'aocal_enqueue_scripts_and_styles');
+add_action( 'wp_enqueue_scripts', 'ao_cal_enqueue_scripts_and_styles');
+add_action( 'admin_enqueue_scripts', 'ao_cal_enqueue_scripts_and_styles');
 
-function aocal_enqueue_scripts_and_styles() {
-    aocal_enqueue_styles();
-    aocal_enqueue_scripts();
+function ao_cal_enqueue_scripts_and_styles() {
+    ao_cal_enqueue_styles();
+    ao_cal_enqueue_scripts();
 }
 
 /**
  * Enqueue the CSS doc, and apply a filter that allows for
  * future users to enqueue styles here as well.
  */
-function aocal_enqueue_styles() {
-    wp_register_style( 'aocal-styles', plugins_url( 'ao-calendar/css/styles.css' ) );
-    wp_register_style( 'aocal-font-awesome-styles', plugins_url( 'ao-calendar/scss/font-awesome/css/font-awesome.min.css' ) );
+function ao_cal_enqueue_styles() {
+    wp_register_style( 'aocal-styles', plugins_url( 'css/styles.css', __FILE__ ) );
+    wp_register_style( 'aocal-font-awesome-styles', plugins_url( 'scss/font-awesome/css/font-awesome.min.css', __FILE__ ) );
+
     $styles = array('aocal-styles', 'aocal-font-awesome-styles');
     $styles = apply_filters( 'ao-cal-enqueue-styles', $styles );
     foreach ($styles as $style) {
@@ -129,10 +130,10 @@ function aocal_enqueue_styles() {
  * Enqueue the JS doc, and apply a filter that allows for
  * future users to enqueue scripts here as well.
  */
-function aocal_enqueue_scripts(){
-    wp_register_script( 'aocal-scripts', plugins_url( 'ao-calendar/js/script.min.js') );
-    wp_register_script( 'jquery', plugins_url( 'ao-calendar/js/jquery.min.js') );
-    $scripts = array( 'jquery', 'aocal-scripts' );
+function ao_cal_enqueue_scripts(){
+    wp_register_script( 'aocal-scripts', plugins_url( 'js/script.min.js', __FILE__ ), array ('jquery'), false, false );
+
+    $scripts = array( 'aocal-scripts' );
     $scripts = apply_filters( 'ao-cal-enqueue-scripts', $scripts );
     foreach ($scripts as $script) {
         wp_enqueue_script( $script );
@@ -167,7 +168,7 @@ $dieMessage = '';
  * Function used to kill pages
  * and give errors or ajax responses
  */
-function _eDie() {
+function ao_cal_eDie() {
     global $dieMessage;
     die($dieMessage);
 }
@@ -230,11 +231,11 @@ else if (isset($_GET['aoCalRenderMonth']) && $_GET['aoCalRenderMonth'] === 'alph
         $fullMonth = ao_cal_gather_events($month, $year);
         $fullMonth = apply_filters('ao-cal-display-month', $fullMonth);
 
-        $dieMessage = json_encode(aocal_render_calendar_month($fullMonth));
+        $dieMessage = json_encode(ao_cal_render_calendar_month($fullMonth));
     }
 
     remove_all_actions('init');
-    add_action('init', '_eDie');
+    add_action('init', 'ao_cal_eDie');
 }
 
 
@@ -242,11 +243,10 @@ else if (isset($_GET['aoCalGetMonth']) && $_GET['aoCalGetMonth'] === 'alphaomega
 
     $month = intval($_GET['aoCalMonth']);
     $month = apply_filters('aocal-month-display', $month);
-
     $dieMessage .= $month;
 
     remove_all_actions('init');
-    add_action('init', '_eDie');
+    add_action('init', 'ao_cal_eDie');
 
 }
 
@@ -259,7 +259,7 @@ else if (isset($_GET['aoCalGetYear']) && $_GET['aoCalGetYear'] === 'alphaomegade
     $dieMessage .= $year;
 
     remove_all_actions('init');
-    add_action('init', '_eDie');
+    add_action('init', 'ao_cal_eDie');
 
 }
 
@@ -268,6 +268,4 @@ else if (isset($_GET['aoCalGetYear']) && $_GET['aoCalGetYear'] === 'alphaomegade
  */
 else {
     add_shortcode( 'ao-calendar', 'ao_cal_render_display' );
-    //Debug
-    //dump(ao_cal_gather_events(3,2015));
 }

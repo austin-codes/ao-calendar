@@ -129,7 +129,6 @@ function aoCalAttachCalendarControls() {
 
 
 jQuery(function() {
-
     aoCalEventDeleteButton();
     aoCalAttachCalendarControls();
     aoCalSetMonth();
