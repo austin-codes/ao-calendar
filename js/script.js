@@ -71,7 +71,6 @@ function aoCalSetMonth() {
         'aoCalGetMonth' : 'alphaomegadevelopmentcalendar',
         'aoCalMonth' : mon
     }, function (m) {
-        console.log(m);
         jQuery('.ao-cal-month').html(m);
     });
 
@@ -130,7 +129,6 @@ function aoCalAttachCalendarControls() {
 
 
 jQuery(function() {
-    console.log("LOADED");
     aoCalEventDeleteButton();
     aoCalAttachCalendarControls();
     aoCalSetMonth();
